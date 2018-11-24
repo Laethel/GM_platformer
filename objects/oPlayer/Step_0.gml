@@ -33,3 +33,25 @@ if (place_meeting(x,y+vsp,oWall)){
 	vsp = 0;
 }
 y = y + vsp;
+
+//Animation
+if (!place_meeting(x,y+1,oWall)){//si il n'y a pas de pixel directement en dessous
+	sprite_index=sPlayerJump; //on assigne le sprite du saut
+	image_speed=0;
+	if (sign(vsp)>0){ //si sign est positif, c'est qu'on descend
+		image_index = 1; //donc on assigne l'image 1 du sprite, qui est la chute
+	} else{
+		image_index = 0; //sinon, on afiche l'image 0, celle du saut
+	}
+} else { //si il y a un pixel en dessous
+	image_speed=1; //vitesse du sprite à 15 fps
+	if (hsp == 0){ //si le player ne bouge pas
+		sprite_index=sPlayer; //sprite standing still
+	} else {
+		sprite_index=sPlayerRun; //sinon animation de course/marche
+	}	
+}
+//tourner le sprite dans l'autre direction
+if (hsp != 0){
+	image_xscale = sign(hsp); //scaling, si set à -1 (donc quand on va à gauche), retourne le sprite
+}
